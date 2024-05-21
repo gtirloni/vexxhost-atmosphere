@@ -1,0 +1,23 @@
+---
+# Copyright 2024 VEXXHOST, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+_prometheus_blackbox_exporter_helm_values:
+  image:
+    registry: "{{ atmosphere_images['prometheus_blackbox_exporter'] | vexxhost.kubernetes.docker_image('domain') }}"
+    repository: "{{ atmosphere_images['prometheus_blackbox_exporter'] | vexxhost.kubernetes.docker_image('path') }}"
+  ingress:
+    enabled: true
+    className: atmosphere
+    hosts:
+      - host: "{{ prometheus_blackbox_exporter_host }}"
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: prometheus-blackbox-exporter-tls
+        hosts:
+          - "{{ prometheus_blackbox_exporter_host }}"
+  serviceMonitor:
+    selfMonitor:
+      enabled: true

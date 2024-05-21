@@ -115,6 +115,7 @@ provisioner:
         kube_prometheus_stack_prometheus_host: "prometheus.{{ domain_name }}"
         kube_prometheus_stack_alertmanager_host: "alertmanager.{{ domain_name }}"
         kube_prometheus_stack_grafana_host: "grafana.{{ domain_name }}"
+        prometheus_blackbox_exporter_host: "blackbox.{{ domain_name }}"
         # Memcached
         openstack_helm_endpoints_memcached_secret_key: secrete123
         # RabbitMQ

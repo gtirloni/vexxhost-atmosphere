@@ -39,3 +39,7 @@
     - role: prometheus_pushgateway
       tags:
         - prometheus-pushgateway
+
+    - role: prometheus_blackbox_exporter
+      tags:
+        - prometheus-blackbox-exporter

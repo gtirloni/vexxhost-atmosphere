@@ -1,0 +1,16 @@
+---
+# Copyright 2024 VEXXHOST, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+prometheus_blackbox_exporter_helm_release_name: prometheus-blackbox-exporter
+prometheus_blackbox_exporter_helm_chart_path: ../../charts/prometheus-blackbox-exporter/
+prometheus_blackbox_exporter_helm_chart_ref: /usr/local/src/prometheus-blackbox-exporter
+
+prometheus_blackbox_exporter_helm_release_namespace: monitoring
+prometheus_blackbox_exporter_helm_values: {}
+
+prometheus_blackbox_exporter_host: "{{ undef('You must specify a host using prometheus_blackbox_exporter_host') }}"
+prometheus_blackbox_exporter_ingress_annotations: {}
+prometheus_blackbox_exporter_ingress_class_name: "{{ atmosphere_ingress_class_name }}"
+prometheus_blackbox_exporter_host_tls_secret_name: "{{ openstack_helm_ingress_secret_name | default(prometheus_blackbox_exporter_host + '-tls')}}"
+
