@@ -18,6 +18,40 @@ _prometheus_blackbox_exporter_helm_values:
       - secretName: prometheus-blackbox-exporter-tls
         hosts:
           - "{{ prometheus_blackbox_exporter_host }}"
+  extraContainers:
+    - name: oauth2-proxy
+      image: "{{ atmosphere_images['oauth2_proxy'] }}"
+      envFrom:
+        - secretRef:
+            name: "{{ prometheus_blackbox_exporter_helm_release_name }}-oauth2-proxy"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 300Mi
+        requests:
+          cpu: 100m
+          memory: 300Mi
+      livenessProbe:
+        httpGet:
+          port: oauth2-proxy
+          path: /ping
+        initialDelaySeconds: 0
+        timeoutSeconds: 1
+      readinessProbe:
+        httpGet:
+          port: oauth2-proxy
+          path: /ready
+        initialDelaySeconds: 0
+        timeoutSeconds: 5
+        successThreshold: 1
+        periodSeconds: 10
+      ports:
+        - containerPort: 8081
+          name: oauth2-proxy
+          protocol: TCP
+        - containerPort: 8082
+          name: oauth2-metrics
+          protocol: TCP
   serviceMonitor:
     selfMonitor:
       enabled: true
